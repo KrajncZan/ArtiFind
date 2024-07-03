@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ArtiFind</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  
+  <script src="{{url_for('static', filename='index/index_js/carousel.js')}}"></script> 
+  <link rel="stylesheet" href="{{url_for('static', filename='index/index_styles/style.css')}}">
+  <link rel="stylesheet" href="{{url_for('static', filename='index/index_styles/carousel.css')}}">
+  <link rel="stylesheet" href="{{url_for('static', filename='index/index_styles/qna.css')}}">
+  <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='index/index_images/logo.jpeg')}}">
+</head>
+<body>
+  <nav>
+    <div id="title">
+      <img src="{{ url_for('static', filename='index/index_images/logo.jpeg')}}" alt="Logo">
+      <h3>ArtiFind</h3>
+    </div>
+    <div id="links">
+      <a href="#">Discover</a>
+      <a href="map">Explore</a>
+      <a href="#">Contact</a>
+    </div>
+    <a id="join" href="#">Join Now</a>
+  </nav>
+
+  <section id="start">
+    <h1>Artistic Adventures</h1>
+    <p>Embark on a journey to uncover hidden art treasures in cities and nature with ArtiFind!</p>
+    <a href="#">Start Exploring</a>
+  </section>
+
+  <section id="unleash">
+    <table>
+      <tr>
+        <td rowspan="2">
+          <h1>Unleash Your Artistic Side</h1>
+          <p>Discover, create, and share art with ArtiFind - the ultimate platform for art enthusiasts!</p>
+        </td>
+        <td>
+          <h3>Discover</h3>
+          <p>Uncover hidden art gems in cities and nature with our interactive maps.</p>
+        </td>
+        <td>
+          <h3>Create</h3>
+          <p>Share your artistic creations and explore unique artworks posted by others.</p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <h3>Connect</h3>
+          <p>Communicate with fellow art lovers, artists, and tourists to exchange ideas and rate artwork.</p>
+        </td>
+        <td>
+          <h3>Explore</h3>
+          <p>Immerse yourself in the world of art anytime, anywhere with ArtiFind's geolocation feature.</p>
+        </td>
+      </tr>
+    </table>
+  </section>
+
+  <section id="explore">
+    <h1>Artistic Exploration Awaits!</h1>
+    <section class="scrollerContainer">
+      <article>
+        <img src="{{url_for('static', filename='index/index_images/carousel/item0.jpeg')}}" alt="" height="100%" width="100%">
+      </article>
+      <article>
+        <img src="{{url_for('static', filename='index/index_images/carousel/item1.jpeg')}}" alt="" height="100%" width="100%">
+      </article>
+      <article>
+        <img src="{{url_for('static', filename='index/index_images/carousel/item2.jpeg')}}" alt="" height="100%" width="100%">
+      </article>
+      <article>
+        <img src="{{url_for('static', filename='index/index_images/carousel/item3.jpeg')}}" alt="" height="100%" width="100%">
+      </article>
+      <article>
+        <img src="{{url_for('static', filename='index/index_images/carousel/item4.jpeg')}}" alt="" height="100%" width="100%">
+      </article>
+      <article>
+        <img src="{{url_for('static', filename='index/index_images/carousel/item5.jpeg')}}" alt="" height="100%" width="100%">
+      </article>
+      <article>
+        <img src="{{url_for('static', filename='index/index_images/carousel/item6.jpeg')}}" alt="" height="100%" width="100%">
+      </article>
+      <article>
+        <img src="{{url_for('static', filename='index/index_images/carousel/item7.jpeg')}}" alt="" height="100%" width="100%">
+      </article>
+      <article>
+        <img src="{{url_for('static', filename='index/index_images/carousel/item8.jpeg')}}" alt="" height="100%" width="100%">
+      </article>
+      <article>
+        <img src="{{url_for('static', filename='index/index_images/carousel/item9.jpeg')}}" alt="" height="100%" width="100%">
+      </article>
+    </section>
+  </section>
+
+  <section id="qna">
+    <h1>Curious Minds Want to Know</h1>
+    <div class="accordion" id="faq">
+        <div class="card">
+            <div class="card-header" id="faqhead1">
+                <a href="#" class="btn btn-header-link" data-toggle="collapse" data-target="#faq1"
+                aria-expanded="true" aria-controls="faq1">How does ArtiFind work?</a>
+            </div>
+
+            <div id="faq1" class="collapse show" aria-labelledby="faqhead1" data-parent="#faq">
+                <div class="card-body">
+                  ArtiFind combines online search, interactive maps, and a social network to unveil hidden artworks in cities and nature.
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header" id="faqhead2">
+                <a href="#" class="btn btn-header-link collapsed" data-toggle="collapse" data-target="#faq2"
+                aria-expanded="true" aria-controls="faq2">Who can use ArtiFind?</a>
+            </div>
+
+            <div id="faq2" class="collapse" aria-labelledby="faqhead2" data-parent="#faq">
+                <div class="card-body">
+                Art lovers, artists, and adventurous tourists seeking unique art experiences in new places can all benefit from ArtiFind.
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header" id="faqhead3">
+                <a href="#" class="btn btn-header-link collapsed" data-toggle="collapse" data-target="#faq3"
+                aria-expanded="true" aria-controls="faq3">What technologies power ArtiFind?</a>
+            </div>
+
+            <div id="faq3" class="collapse" aria-labelledby="faqhead3" data-parent="#faq">
+                <div class="card-body">
+                ArtiFind is a tech marvel using HTML, CSS, JavaScript, Python, and SQL to create a seamless art exploration experience for users.
+                </div>
+            </div>
+        </div>
+      <div class="card">
+          <div class="card-header" id="faqhead4">
+              <a href="#" class="btn btn-header-link collapsed" data-toggle="collapse" data-target="#faq4"
+              aria-expanded="true" aria-controls="faq4">Why choose ArtiFind?</a>
+          </div>
+
+          <div id="faq4" class="collapse" aria-labelledby="faqhead4" data-parent="#faq">
+              <div class="card-body">
+                ArtiFind connects art with the environment, allowing you to discover and share art in unexpected places anytime, anywhere.
+              </div>
+          </div>
+      </div>
+      <div class="card">
+          <div class="card-header" id="faqhead5">
+              <a href="#" class="btn btn-header-link collapsed" data-toggle="collapse" data-target="#faq5"
+              aria-expanded="true" aria-controls="faq5">Can I contribute to ArtiFind?</a>
+          </div>
+
+          <div id="faq5" class="collapse" aria-labelledby="faqhead5" data-parent="#faq">
+              <div class="card-body">
+                Absolutely! Artists and users can share their discovered or created artworks, interact, rate art, and build a vibrant art community on ArtiFind.
+              </div>
+          </div>
+      </div>
+    </div>
+  </section>
+  
+  <section id="explore_now">
+    <div class="container">
+      <h1>Start Your Art Journey</h1>
+      <p>Unleash your inner art explorer and discover hidden masterpieces around you!</p>
+      <a href="map">Explore Now</a>
+    </div>
+  </section>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>

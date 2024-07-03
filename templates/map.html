@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ArtiFind</title>
+  <!-- Include Leaflet CSS and JS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+   integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+   crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+   integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+   crossorigin=""></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+    }
+    #map {
+      height: 100vh;
+    }
+  </style>
+</head>
+<body>
+
+<div id="map"></div>
+
+  <script>
+    var mymap;
+
+    function setMapCenter(lat, lng) {
+      mymap.setView([lat, lng], 13);
+    }
+
+    function addMarker(lat, lng, title, description, imageUrl) {
+      var marker = L.marker([lat, lng]).addTo(mymap);
+
+      var popupContent = `
+        <h2>${title}</h2>
+        <p>${description}</p>
+        <img src="${imageUrl}" alt="Marker Image" style="max-width: 100%; height: auto;">
+      `;
+
+      marker.bindPopup(popupContent);
+    }
+
+    function getUserLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          function (position) {
+            setMapCenter(position.coords.latitude, position.coords.longitude);
+
+            // Custom icon for user's location
+            var userIcon = L.icon({
+              iconUrl: "{{url_for('static', filename='user.png')}}",
+              iconSize: [50, 50], // set the size of the icon
+              iconAnchor: [35, 50], // set the anchor point of the icon
+              popupAnchor: [-20, -50], // set the popup anchor
+            });
+
+            L.marker([position.coords.latitude, position.coords.longitude], { icon: userIcon }).addTo(mymap);
+          },
+          function (error) {
+            console.error('Error getting user location:', error.message);
+            setMapCenter(46.058447, 14.505950); // Default to predefined location
+          },
+          { enableHighAccuracy: false, timeout: 10000, maximumAge: Infinity }
+
+        );;
+      } 
+      else {
+        console.error('Geolocation is not supported by this browser.');
+        setMapCenter(46.058447, 14.505950); // Default to predefined location
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      mymap = L.map('map');
+      mymap.setView([46.058447, 14.505950], 13);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap contributors'
+      }).addTo(mymap);
+
+      $.ajax({
+        url: "/load_markers",
+        success: function (markers) {
+          for (var key in markers) {
+            var marker = markers[key];
+            addMarker(marker.lat, marker.lng, marker.title, marker.description, marker.imageUrl);
+          }
+        }
+      });
+
+      getUserLocation();
+
+      // Variable to store the temporary marker for the popup
+      var tempMarker;
+
+      mymap.on('click', function (e) {
+        // Create a popup with input fields and buttons
+        var popupContent = `
+          <table>
+          <tr>
+            <td><label for="markerTitle">Title:</label></td>
+            <td><input type="text" id="markerTitle"></td>
+          </tr>
+          <tr>
+            <td><label for="markerDescription">Description:</label></td>
+            <td><input type="text" id="markerDescription"></td>
+          </tr>
+          <tr>
+            <td><label for="markerImageUrl">Image URL:</label></td>
+            <td><input type="text" id="markerImageUrl"></td>
+          </tr>
+          <tr>
+            <td colspan="2">
+              <button onclick="addMarkerAndClosePopup(${e.latlng.lat}, ${e.latlng.lng})">Add Marker</button>
+              <button onclick="cancelAddMarker()">Cancel</button>
+            </td>
+          </tr>
+        </table>
+        `;
+
+        // Create a temporary marker for the popup
+        tempMarker = L.marker([e.latlng.lat, e.latlng.lng]).addTo(mymap);
+        tempMarker.bindPopup(popupContent).openPopup();
+      });
+
+      // Function to add marker and close the popup
+      window.addMarkerAndClosePopup = function (lat, lng) {
+        var title = document.getElementById('markerTitle').value;
+        var description = document.getElementById('markerDescription').value;
+        var imageUrl = document.getElementById('markerImageUrl').value;
+
+        addMarker(lat, lng, title, description, imageUrl);
+
+        $.ajax({
+          url: "/save_marker",
+          data: {
+            lat: lat,
+            lng: lng,
+            title: title,
+            description: description,
+            imageUrl: imageUrl
+          },
+          success: function (result) {
+            console.log(result);
+          }
+        });
+
+        mymap.closePopup(); // Close the popup
+        mymap.removeLayer(tempMarker); // Remove the temporary marker
+      };
+
+      // Function to cancel adding a marker and close the popup
+      window.cancelAddMarker = function () {
+        mymap.closePopup(); // Close the popup
+        mymap.removeLayer(tempMarker); // Remove the temporary marker
+      };
+    });
+  </script>
+
+</body>
+</html>
